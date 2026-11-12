@@ -14,12 +14,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   // Carrega o usuário salvo no localStorage ao inicializar a aplicação
- useEffect(() => { 
-    const storageUser: User | null = storageService.getUser();
-    if (storageUser) {
-      setUser(storageUser);
+ useEffect(() => {
+    async function loadStoredUser() {
+        try{
+            setLoading(true);
+            const storageUser: User | null = await storageService.getUser();
+             if (storageUser) {
+                setUser(storageUser);
+            }
+        }catch(error){
+            console.error("Erro ao carregar dados", error);
+        }finally{
+            setLoading(false);
+        }
     }
-    setLoading(false);
+    
+    loadStoredUser();
   }, []);
 
   const login = (credentials: LoginCredentials): Promise<void> => {

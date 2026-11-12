@@ -1,29 +1,32 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { User } from "../types/auth";
 
 const USER_KEY = '@BlogFiap:user';
 
 export const storageService = {
-  /**
-   * Busca entidade de usuário salva no local storage;
-   * @returns O objeto do Usuário tipado ou null se não encontrar.
-   */
-  getUser: (): User | null => {
-    const user = localStorage.getItem(USER_KEY);
-    return user ? JSON.parse(user) : null;
+  getUser: async (): Promise<User | null> => {
+    try {
+      const user = await AsyncStorage.getItem(USER_KEY);
+      return user ? JSON.parse(user) : null;
+    } catch (error) {
+      console.error('Erro ao buscar usuário do storage', error);
+      return null;
+    }
   },
   
-  /**
-   * Salva o objeto do usuário no localStorage convertendo para string.
-   * @param user - Objeto do usuário
-   */
-  setUser: (user: User): void => {
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
+  setUser: async (user: User): Promise<void> => {
+    try {
+      await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
+    } catch (error) {
+      console.error('Erro ao salvar usuário no storage', error);
+    }
   },
   
-  /**
-   * Remove o usuário do localStorage.
-   */
-  removeUser: (): void => {
-    localStorage.removeItem(USER_KEY);
+  removeUser: async (): Promise<void> => {
+    try {
+      await AsyncStorage.removeItem(USER_KEY);
+    } catch (error) {
+      console.error('Erro ao remover usuário do storage', error);
+    }
   }
 };
