@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { usePosts } from '../../contexts/PostContext';
+import { Footer } from '../../components/Footer/Footer';
 import {
   Container,
   HeaderSection,
@@ -19,6 +19,7 @@ import {
   EmptyState,
   LoadingMessage,
 } from './Dashboard.styles';
+import { usePosts } from '../../contexts/PostContext';
 
 export const DashboardScreen: React.FC = () => {
   const { posts, isLoading, errorMessage, searchPosts, fetchPosts } = usePosts();
@@ -42,60 +43,67 @@ export const DashboardScreen: React.FC = () => {
 
   return (
     <Container>
-      <HeaderSection>
-        <TitleGroup>
-          <Title>Mural de Postagens</Title>
-          <Subtitle>Explore artigos e publicações da comunidade acadêmica</Subtitle>
-        </TitleGroup>
+      <FlatList
+        data={posts}
+        keyExtractor={(item) => String(item.id)}
+        showsVerticalScrollIndicator={false}
+        refreshing={isLoading}
+        onRefresh={fetchPosts}
+        contentContainerStyle={{ flexGrow: 1 }}
+        ListHeaderComponent={
+          <HeaderSection>
+            <TitleGroup>
+              <Title>Mural de Postagens</Title>
+              <Subtitle>Explore artigos e publicações da comunidade acadêmica</Subtitle>
+            </TitleGroup>
 
-        <SearchContainer>
-          <SearchInput
-            placeholder="Buscar por título, conteúdo ou descrição..."
-            placeholderTextColor="#A1A1AA"
-            value={searchTerm}
-            onChangeText={setSearchTerm}
-            autoCapitalize="none"
-          />
-        </SearchContainer>
-      </HeaderSection>
+            <SearchContainer>
+              <SearchInput
+                placeholder="Buscar por título, conteúdo ou descrição..."
+                placeholderTextColor="#A1A1AA"
+                value={searchTerm}
+                onChangeText={setSearchTerm}
+                autoCapitalize="none"
+              />
+            </SearchContainer>
 
-      {errorMessage && <EmptyState>{errorMessage}</EmptyState>}
+            {errorMessage && <EmptyState>{errorMessage}</EmptyState>}
 
-      {isLoading && posts.length === 0 ? (
-        <LoadingMessage>Carregando postagens...</LoadingMessage>
-      ) : !errorMessage && posts.length === 0 ? (
-        <EmptyState>
-          {searchTerm
-            ? `Nenhuma postagem encontrada para "${searchTerm}".`
-            : 'Nenhuma postagem disponível no momento.'}
-        </EmptyState>
-      ) : (
-        <FlatList
-          data={posts}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => (
-            <PostCard 
-              onPress={() => navigation.navigate('PostDetail', { postId: item.id })}
-            >
-              <PostHeader>
-                <PostTitle>{ item.title }</PostTitle>
-                <PostDescription numberOfLines={2}>
-                  { item.description }
-                </PostDescription>
-              </PostHeader>
+            {isLoading && posts.length === 0 && (
+              <LoadingMessage>Carregando postagens...</LoadingMessage>
+            )}
+          </HeaderSection>
+        }
+        renderItem={({ item }) => (
+          <PostCard 
+            onPress={() => navigation.navigate('PostDetail', { postId: item.id })}
+          >
+            <PostHeader>
+              <PostTitle>{item.title || 'Sem título'}</PostTitle>
+              <PostDescription numberOfLines={2}>
+                { item.description }
+              </PostDescription>
+            </PostHeader>
 
-              <PostFooter>
-                <AuthorInfo>
-                  Por: {item.author?.name || 'Autor desconhecido'}
-                </AuthorInfo>
-              </PostFooter>
-            </PostCard>
-          )}
-          refreshing={isLoading}
-          onRefresh={fetchPosts}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+            <PostFooter>
+              <AuthorInfo>
+                Por: {typeof item.author === 'string' ? item.author : (item.author?.name || 'Autor desconhecido')}
+              </AuthorInfo>
+            </PostFooter>
+          </PostCard>
+        )}
+        ListEmptyComponent={
+          !isLoading ? (
+            <EmptyState>
+              {searchTerm
+                ? `Nenhuma postagem encontrada para "${searchTerm}".`
+                : 'Nenhuma postagem disponível no momento.'}
+            </EmptyState>
+          ) : <></>
+        }
+        ListFooterComponent={<Footer />}
+        ListFooterComponentStyle={{ marginTop: 'auto' }}
+      />
     </Container>
   );
 };

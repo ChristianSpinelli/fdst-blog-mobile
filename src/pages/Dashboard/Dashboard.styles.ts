@@ -3,11 +3,11 @@ import styled from 'styled-components/native';
 export const Container = styled.SafeAreaView`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
-  padding: 16px;
 `;
 
 export const HeaderSection = styled.View`
   margin-bottom: 20px;
+  padding: 16px;
 `;
 
 export const TitleGroup = styled.View`
@@ -45,7 +45,7 @@ export const PostCard = styled.TouchableOpacity`
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 8px;
   padding: 16px;
-  margin-bottom: 12px;
+  margin: 0 16px 12px 16px;
 `;
 
 export const PostHeader = styled.View`
