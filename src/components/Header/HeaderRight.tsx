@@ -27,7 +27,10 @@ export const HeaderRight: React.FC = () => {
 
   const handleNavigate = (screenName: string) => {
     setIsOpen(false);
-    navigation.replace(screenName);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: screenName }]
+    })
   };
 
   const handleLogout = async () => {

@@ -7,7 +7,7 @@ export const FormHeader = styled.View`
 export const Title = styled.Text`
   font-size: 22px;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.textPrimary};
+  color: ${({ theme }) => theme.colors.primary};
   margin-bottom: 4px;
 `;
 
