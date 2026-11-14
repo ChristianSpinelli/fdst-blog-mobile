@@ -33,19 +33,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = (credentials: LoginCredentials): Promise<void> => {
-    setLoading(true);
-    return authService.login(credentials).then((user:User)=>{
+    return authService.login(credentials).then(async (user: User) => {
       setUser(user);
-      setLoading(false);
-      storageService.setUser(user);
-    }).catch((error) => {
-      setLoading(false);
-      throw error;
-    })
+      await storageService.setUser(user);
+    });
   };
-
-  const logout = (): void => {
-    storageService.removeUser();
+  const logout = async (): Promise<void> => {
+    await storageService.removeUser();
     setUser(null);
   };
 

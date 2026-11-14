@@ -16,6 +16,7 @@ import {
   SubmitButtonText,
   Title
 } from './Login.styles';
+import { Alert } from 'react-native';
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
@@ -38,6 +39,8 @@ export const LoginScreen: React.FC = () => {
     const trimmedUsername = values.username.trim();
     const trimmedPassword = values.password.trim();
 
+    console.log("Tentando logar com:", trimmedUsername);
+
     try {
       setGlobalError('');
       await login({
@@ -47,7 +50,6 @@ export const LoginScreen: React.FC = () => {
       navigation.replace('Dashboard');
     } catch (error) {
       setGlobalError('Não foi possível realizar o login, verifique suas credenciais e tente novamente.');
-      console.error('Erro ao logar ', error);
     } finally {
       setSubmitting(false);
     }
