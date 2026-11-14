@@ -8,11 +8,14 @@ import DashboardScreen from '../pages/Dashboard/Dashboard';
 import HeaderTitle from '../components/Header/HeaderTitle';
 import HeaderRight from '../components/Header/HeaderRight';
 import PostDetailScreen from '../pages/PostDetail/PostDetail';
+import { UserRole } from '../types/auth';
+import AdminPostsScreen from '../pages/AdminPosts/AdminPosts';
+import CreateOrEditPostScreen from '../pages/CreateOrEditPost/CreateOrEditPost';
 
 const Stack = createNativeStackNavigator();
 
 export function Routes() {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading, user } = useAuth();
 
   if (loading) {
     return (
@@ -58,6 +61,39 @@ export function Routes() {
                 headerRight: () => <HeaderRight />,
               }}
             />
+
+            {user?.role === UserRole.PROFESSOR && (
+              <>
+                <Stack.Screen
+                  name="AdminPosts"
+                  component={AdminPostsScreen}
+                  options={{
+                    headerTitle: () => <HeaderTitle />,
+                    headerRight: () => <HeaderRight />,
+                  }}
+                />
+                <Stack.Screen
+                  name="CreatePost"
+                  options={{
+                    headerTitle: () => <HeaderTitle />,
+                    headerRight: () => <HeaderRight />,
+                  }}
+                >
+                  {(props) => <CreateOrEditPostScreen {...props} isEditing={false} />}
+                </Stack.Screen>
+
+                 <Stack.Screen
+                  name="EditPost"
+                  options={{
+                    headerTitle: () => <HeaderTitle />,
+                    headerRight: () => <HeaderRight />,
+                  }}
+                >
+                  {(props) => <CreateOrEditPostScreen {...props} isEditing={true} />}
+                </Stack.Screen>
+              </>
+            )}
+
           </>
         )}
       </Stack.Navigator>

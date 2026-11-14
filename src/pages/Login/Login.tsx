@@ -39,8 +39,6 @@ export const LoginScreen: React.FC = () => {
     const trimmedUsername = values.username.trim();
     const trimmedPassword = values.password.trim();
 
-    console.log("Tentando logar com:", trimmedUsername);
-
     try {
       setGlobalError('');
       await login({
