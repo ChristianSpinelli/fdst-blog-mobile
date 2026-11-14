@@ -1,20 +1,5 @@
 import styled from 'styled-components/native';
 
-export const BackButton = styled.TouchableOpacity`
-  background-color: ${({ theme }) => theme.colors.primary};
-  border: 1px solid ${({ theme }) => theme.colors.borderLight};
-  padding: 10px 16px;
-  border-radius: ${({ theme }) => theme.radii.small};
-  align-self: flex-start;
-  margin-bottom: 20px;
-`;
-
-export const BackButtonText = styled.Text`
-  color: ${({ theme }) => theme.colors.textPrimary};
-  font-size: 14px;
-  font-weight: 600;
-`;
-
 export const PostHeader = styled.View`
   margin-bottom: 20px;
   border-bottom-width: 1px;

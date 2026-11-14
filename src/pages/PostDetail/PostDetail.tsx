@@ -4,8 +4,6 @@ import { Post } from '../../types/post';
 import { usePosts } from '../../contexts/PostContext';
 import { ScreenLayout } from '../../components/ScreenLayout/ScreenLayout';
 import {
-  BackButton,
-  BackButtonText,
   PostHeader,
   PostTitle,
   PostMeta,
@@ -56,9 +54,6 @@ export const PostDetailScreen: React.FC = () => {
   if (error || !post) {
     return (
       <ScreenLayout>
-        <BackButton onPress={() => navigation.goBack()}>
-          <BackButtonText>Voltar</BackButtonText>
-        </BackButton>
         <ErrorMessage>{error || 'Post não encontrado.'}</ErrorMessage>
       </ScreenLayout>
     );
@@ -66,10 +61,6 @@ export const PostDetailScreen: React.FC = () => {
 
   return (
     <ScreenLayout>
-      <BackButton onPress={() => navigation.goBack()}>
-        <BackButtonText>Voltar</BackButtonText>
-      </BackButton>
-
       <PostHeader>
         <PostTitle>{post.title}</PostTitle>
         <PostMeta>
