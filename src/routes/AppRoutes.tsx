@@ -5,7 +5,8 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
 import LoginScreen from '../pages/Login/Login';
 import DashboardScreen from '../pages/Dashboard/Dashboard';
-import { APP_NAME } from '../types/global';
+import HeaderTitle from '../components/Header/HeaderTitle';
+import HeaderRight from '../components/Header/HeaderRight';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,18 +23,26 @@ export function Routes() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerTitleAlign: 'center' }}>
+      <Stack.Navigator 
+        screenOptions={{ 
+          headerStyle: { backgroundColor: '#18181B' },
+          headerTintColor: '#FFFFFF',
+        }}
+      >
         {!isAuthenticated ? (
           <Stack.Screen 
             name="Login" 
             component={LoginScreen} 
-            options={{ title: APP_NAME }} 
+            options={{ headerTitle: () => <HeaderTitle /> }} 
           />
         ) : (
           <Stack.Screen
             name="Dashboard"
             component={DashboardScreen}
-            options={{ title: APP_NAME }}
+            options={{
+              headerTitle: () => <HeaderTitle />,
+              headerRight: () => <HeaderRight />,
+            }}
           />
         )}
       </Stack.Navigator>
@@ -46,5 +55,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#09090B',
   },
 });
