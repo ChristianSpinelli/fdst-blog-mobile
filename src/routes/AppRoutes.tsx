@@ -7,6 +7,7 @@ import LoginScreen from '../pages/Login/Login';
 import DashboardScreen from '../pages/Dashboard/Dashboard';
 import HeaderTitle from '../components/Header/HeaderTitle';
 import HeaderRight from '../components/Header/HeaderRight';
+import PostDetailScreen from '../pages/PostDetail/PostDetail';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,21 +30,35 @@ export function Routes() {
           headerTintColor: '#FFFFFF',
         }}
       >
-        {!isAuthenticated ? (
-          <Stack.Screen 
-            name="Login" 
-            component={LoginScreen} 
-            options={{ headerTitle: () => <HeaderTitle /> }} 
-          />
-        ) : (
-          <Stack.Screen
-            name="Dashboard"
-            component={DashboardScreen}
-            options={{
-              headerTitle: () => <HeaderTitle />,
-              headerRight: () => <HeaderRight />,
-            }}
-          />
+        {!isAuthenticated && (
+          <>
+            <Stack.Screen 
+              name="Login" 
+              component={LoginScreen} 
+              options={{ headerTitle: () => <HeaderTitle /> }} 
+            />
+          </>
+        )}
+
+        {isAuthenticated && (
+          <>
+            <Stack.Screen
+              name="Dashboard"
+              component={DashboardScreen}
+              options={{
+                headerTitle: () => <HeaderTitle />,
+                headerRight: () => <HeaderRight />,
+              }}
+            />
+            <Stack.Screen
+              name="PostDetail"
+              component={PostDetailScreen}
+              options={{
+                headerTitle: () => <HeaderTitle />,
+                headerRight: () => <HeaderRight />,
+              }}
+            />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
