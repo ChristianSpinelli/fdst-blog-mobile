@@ -10,6 +10,7 @@ interface UserContextData {
   createUser: (data: UserRequest) => Promise<void>;
   updateUser: (data: Partial<UserRequest>, id: number) => Promise<void>;
   deleteUser: (id: number) => Promise<void>;
+  getUserById: (id:number) => Promise<User>;
 }
 
 const UserContext = createContext<UserContextData>({} as UserContextData);
@@ -41,9 +42,17 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const deleteUser = async (id: number) => {
-    await userService.deleteUser(id);
-    setUsers((prev) => prev.filter((user) => Number(user.id) !== Number(id)));
+      await userService.deleteUser(id);
+      setUsers((prev) => prev.filter((user) => Number(user.id) !== Number(id)));
   };
+
+  const getUserById = async (id: number) => {
+    try{
+      return await userService.getUserById(id);
+    }catch(error){
+      throw new Error('Não foi possível carregar o usuário.');
+    }
+  }
 
   return (
     <UserContext.Provider
@@ -55,6 +64,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         createUser,
         updateUser,
         deleteUser,
+        getUserById
       }}
     >
       {children}

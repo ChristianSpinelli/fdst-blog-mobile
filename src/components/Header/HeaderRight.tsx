@@ -14,7 +14,7 @@ import {
   UserSection,
   UserBadge,
 } from './HeaderRight.styles';
-import { UserRole } from '../../types/auth';
+import { UserRole } from '../../types/user';
 
 export const HeaderRight: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,12 +64,20 @@ export const HeaderRight: React.FC = () => {
             </MenuItem>
 
             {user?.role === UserRole.PROFESSOR && (
-              <MenuItem 
-                onPress={() => handleNavigate('AdminPosts')}
-                activeOpacity={0.7}
-              >
-                <MenuItemText>Painel Administrativo</MenuItemText>
-              </MenuItem>
+              <>
+                <MenuItem 
+                  onPress={() => handleNavigate('AdminPosts')}
+                  activeOpacity={0.7}
+                >
+                  <MenuItemText>Painel de Postagens</MenuItemText>
+                </MenuItem>
+                <MenuItem 
+                  onPress={() => handleNavigate('AdminTeachers')}
+                  activeOpacity={0.7}
+                >
+                  <MenuItemText>Painel de Professores</MenuItemText>
+                </MenuItem>
+              </>
             )}
 
             <MenuItem 

@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { User } from "../types/auth";
+import { User } from '../types/user';
 
 const USER_KEY = '@BlogFiap:user';
 

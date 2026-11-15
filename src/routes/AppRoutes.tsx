@@ -8,9 +8,11 @@ import DashboardScreen from '../pages/Dashboard/Dashboard';
 import HeaderTitle from '../components/Header/HeaderTitle';
 import HeaderRight from '../components/Header/HeaderRight';
 import PostDetailScreen from '../pages/PostDetail/PostDetail';
-import { UserRole } from '../types/auth';
 import AdminPostsScreen from '../pages/AdminPosts/AdminPosts';
 import CreateOrEditPostScreen from '../pages/CreateOrEditPost/CreateOrEditPost';
+import { UserRole } from '../types/user';
+import AdminTeachersScreen from '../pages/AdminTeachers/AdminTeachers';
+import CreateOrEditTeacherScreen from '../pages/CreateOrEditTeacher/CreateOrEditTeacher';
 
 const Stack = createNativeStackNavigator();
 
@@ -90,6 +92,33 @@ export function Routes() {
                   }}
                 >
                   {(props) => <CreateOrEditPostScreen {...props} isEditing={true} />}
+                </Stack.Screen>
+                <Stack.Screen
+                  name="AdminTeachers"
+                  component={AdminTeachersScreen}
+                  options={{
+                    headerTitle: () => <HeaderTitle />,
+                    headerRight: () => <HeaderRight />,
+                  }}
+                />
+                <Stack.Screen
+                  name="CreateTeacher"
+                  options={{
+                    headerTitle: () => <HeaderTitle />,
+                    headerRight: () => <HeaderRight />,
+                  }}
+                >
+                  {(props) => <CreateOrEditTeacherScreen {...props} isEditing={false} />}
+                </Stack.Screen>
+
+                 <Stack.Screen
+                  name="EditTeacher"
+                  options={{
+                    headerTitle: () => <HeaderTitle />,
+                    headerRight: () => <HeaderRight />,
+                  }}
+                >
+                  {(props) => <CreateOrEditTeacherScreen {...props} isEditing={true} />}
                 </Stack.Screen>
               </>
             )}

@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { AuthContextData, LoginCredentials, User } from '../types/auth';
+import { AuthContextData, LoginCredentials } from '../types/auth';
 import authService from '../services/authService';
 import { storageService } from '../services/storageService';
+import { User } from '../types/user';
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
