@@ -16,7 +16,6 @@ import {
   SubmitButtonText,
   Title
 } from './Login.styles';
-import { Alert } from 'react-native';
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()

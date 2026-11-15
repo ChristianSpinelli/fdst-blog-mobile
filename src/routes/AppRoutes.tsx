@@ -13,6 +13,8 @@ import CreateOrEditPostScreen from '../pages/CreateOrEditPost/CreateOrEditPost';
 import { UserRole } from '../types/user';
 import AdminTeachersScreen from '../pages/AdminTeachers/AdminTeachers';
 import CreateOrEditTeacherScreen from '../pages/CreateOrEditTeacher/CreateOrEditTeacher';
+import AdminStudentsScreen from '../pages/AdminStudents/AdminStudents';
+import CreateOrEditStudentScreen from '../pages/CreateOrEditStudent/CreateOrEditStudent';
 
 const Stack = createNativeStackNavigator();
 
@@ -83,8 +85,7 @@ export function Routes() {
                 >
                   {(props) => <CreateOrEditPostScreen {...props} isEditing={false} />}
                 </Stack.Screen>
-
-                 <Stack.Screen
+                <Stack.Screen
                   name="EditPost"
                   options={{
                     headerTitle: () => <HeaderTitle />,
@@ -110,8 +111,7 @@ export function Routes() {
                 >
                   {(props) => <CreateOrEditTeacherScreen {...props} isEditing={false} />}
                 </Stack.Screen>
-
-                 <Stack.Screen
+                <Stack.Screen
                   name="EditTeacher"
                   options={{
                     headerTitle: () => <HeaderTitle />,
@@ -119,6 +119,32 @@ export function Routes() {
                   }}
                 >
                   {(props) => <CreateOrEditTeacherScreen {...props} isEditing={true} />}
+                </Stack.Screen>
+                <Stack.Screen
+                  name="AdminStudents"
+                  component={AdminStudentsScreen}
+                  options={{
+                    headerTitle: () => <HeaderTitle />,
+                    headerRight: () => <HeaderRight />,
+                  }}
+                />
+                <Stack.Screen
+                  name="CreateStudent"
+                  options={{
+                    headerTitle: () => <HeaderTitle />,
+                    headerRight: () => <HeaderRight />,
+                  }}
+                >
+                  {(props) => <CreateOrEditStudentScreen {...props} isEditing={false} />}
+                </Stack.Screen>
+                <Stack.Screen
+                  name="EditStudent"
+                  options={{
+                    headerTitle: () => <HeaderTitle />,
+                    headerRight: () => <HeaderRight />,
+                  }}
+                >
+                  {(props) => <CreateOrEditStudentScreen {...props} isEditing={true} />}
                 </Stack.Screen>
               </>
             )}

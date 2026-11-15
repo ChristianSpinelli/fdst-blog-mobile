@@ -77,6 +77,12 @@ export const HeaderRight: React.FC = () => {
                 >
                   <MenuItemText>Painel de Professores</MenuItemText>
                 </MenuItem>
+                <MenuItem 
+                  onPress={() => handleNavigate('AdminStudents')}
+                  activeOpacity={0.7}
+                >
+                  <MenuItemText>Painel de Alunos</MenuItemText>
+                </MenuItem>
               </>
             )}
 

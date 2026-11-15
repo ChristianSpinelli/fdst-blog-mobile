@@ -55,7 +55,7 @@ export const CreateOrEditTeacherScreen: React.FC<CreateOrEditTeacherProps> = ({ 
     email: Yup.string().email('E-mail inválido.').required('O e-mail é obrigatório.'),
     password: isEditing 
       ? Yup.string().notRequired() 
-      : Yup.string().required('A senha é obrigatória.').min(6, 'A senha deve ter no mínimo 6 caracteres.'),
+      : Yup.string().required('A senha é obrigatória.').min(8, 'A senha deve ter no mínimo 8 caracteres.'),
   });
 
   useEffect(() => {
