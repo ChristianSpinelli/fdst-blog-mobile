@@ -24,9 +24,11 @@ import {
   LoadingMessage,
 } from '../../styles/AdminStyles';
 import { UserRole } from '../../types/user';
+import { useAuth } from '../../contexts/AuthContext';
 
 export const AdminTeachersScreen: React.FC = () => {
   const { users, isLoading, errorMessage, fetchUsersByRole, deleteUser } = useUsers();
+  const { user, logout } = useAuth();
   const navigation = useNavigation<any>();
   const [actionError, setActionError] = useState<string | null>(null);
 
@@ -47,6 +49,9 @@ export const AdminTeachersScreen: React.FC = () => {
             try {
               setActionError(null);
               await deleteUser(id);
+              if(user?.id === id){
+                logout();
+              }
             } catch (err) {
               setActionError('Não foi possível excluir o usuário. Tente novamente.');
             }
