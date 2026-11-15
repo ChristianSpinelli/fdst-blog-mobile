@@ -20,7 +20,7 @@ import {
   StyledTextArea,
   Label,
   LoadingMessage,
-} from './CreateOrEditPost.styles';
+} from '../../styles/AdminStyles';
 import { View } from 'react-native';
 
 interface PostFormValues {

@@ -22,7 +22,7 @@ import {
   DeleteButtonText,
   EmptyState,
   LoadingMessage,
-} from './AdminPosts.styles';
+} from '../../styles/AdminStyles';
 
 export const AdminPostsScreen: React.FC = () => {
   const { posts, isLoading, errorMessage, deletePost, fetchPosts } = usePosts();

@@ -17,7 +17,7 @@ import {
   StyledInput,
   Label,
   LoadingMessage,
-} from './CreateOrEditTeacher.styles';
+} from '../../styles/AdminStyles';
 import { User, UserRequest, UserRole } from '../../types/user';
 
 interface TeacherFormValues {
@@ -139,7 +139,7 @@ export const CreateOrEditTeacherScreen: React.FC<CreateOrEditTeacherProps> = ({ 
         onSubmit={handleSubmit}
         enableReinitialize={true}
       >
-        {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isSubmitting }) => (
+        {({ handleChange, setFieldValue, handleBlur, handleSubmit, values, errors, touched, isSubmitting }) => (
           <>
             <FormGroup>
               <Label>Nome Completo</Label>
@@ -162,7 +162,7 @@ export const CreateOrEditTeacherScreen: React.FC<CreateOrEditTeacherProps> = ({ 
                 placeholder="Digite o nome de usuário..."
                 placeholderTextColor="#71717A"
                 autoCapitalize="none"
-                onChangeText={handleChange('username')}
+                onChangeText={(text) => setFieldValue('username', text.replace(/\s/g, ''))}
                 onBlur={handleBlur('username')}
                 value={values.username}
                 $isError={Boolean(touched.username && errors.username)}

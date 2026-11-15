@@ -22,7 +22,7 @@ import {
   DeleteButtonText,
   EmptyState,
   LoadingMessage,
-} from './AdminTeachers.styles';
+} from '../../styles/AdminStyles';
 import { UserRole } from '../../types/user';
 
 export const AdminTeachersScreen: React.FC = () => {
