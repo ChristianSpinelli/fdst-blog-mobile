@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { postService, } from '../services/postService';
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import { postService } from '../services/postService';
 import { Post, PostRequest } from '../types/post';
+import { useAuth } from './AuthContext';
 
 interface PostContextType {
   posts: Post[];
@@ -9,19 +10,20 @@ interface PostContextType {
   fetchPosts: () => Promise<void>;
   createPost: (data: PostRequest) => Promise<void>;
   deletePost: (id: number) => Promise<void>;
-  searchPosts: (query:string) => Promise<void>;
+  searchPosts: (query: string) => Promise<void>;
   getPostById: (id: number) => Promise<Post>;
-  updatePost: (post: PostRequest, id:number) => Promise<Post>;
+  updatePost: (post: PostRequest, id: number) => Promise<Post>;
 }
 
 const PostContext = createContext<PostContextType | undefined>(undefined);
 
 export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { isAuthenticated } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       setIsLoading(true);
       setErrorMessage(null);
@@ -32,7 +34,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   const searchPosts = async (query: string) => {
     try {
@@ -80,21 +82,26 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
-  const updatePost = async (post:PostRequest, id:number) => {
-    try{
+  const updatePost = async (post: PostRequest, id: number) => {
+    try {
       const response: Post = await postService.editPost(post, id);
       setPosts((prevPosts) =>
         prevPosts.map((p) => (Number(p.id) === Number(id) ? response : p))
       );
-      return response;      
-    }catch(error){
-      throw new Error("Não foi possível atualizar o Post");
+      return response;
+    } catch (error) {
+      throw new Error('Não foi possível atualizar o Post');
     }
-  }
+  };
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    if (isAuthenticated) {
+      fetchPosts();
+    } else {
+      setPosts([]);
+      setErrorMessage(null);
+    }
+  }, [isAuthenticated, fetchPosts]);
 
   return (
     <PostContext.Provider
@@ -107,7 +114,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         deletePost,
         searchPosts,
         getPostById,
-        updatePost
+        updatePost,
       }}
     >
       {children}
