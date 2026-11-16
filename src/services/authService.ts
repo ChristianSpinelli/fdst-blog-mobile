@@ -1,5 +1,6 @@
 import api from '../api/api';
-import { LoginCredentials, User } from '../types/auth';
+import { LoginCredentials } from '../types/auth';
+import { User } from '../types/user';
 
 const authService = {
   /**
